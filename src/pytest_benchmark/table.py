@@ -50,6 +50,7 @@ class TableResults(object):
                 "min": "Min",
                 "max": "Max",
                 "mean": "Mean",
+                "mode": "Mode",
                 "stddev": "StdDev",
                 "rounds": "Rounds",
                 "iterations": "Iterations",
@@ -93,7 +94,7 @@ class TableResults(object):
                 has_error = bench.get("has_error")
                 tr.write(bench["name"].ljust(widths["name"]), red=has_error, invert=has_error)
                 for prop in self.columns:
-                    if prop in ("min", "max", "mean", "stddev", "median", "iqr"):
+                    if prop in ("min", "max", "mean", "mode", "stddev", "median", "iqr"):
                         tr.write(
                             ALIGNED_NUMBER_FMT.format(
                                 bench[prop] * adjustment,

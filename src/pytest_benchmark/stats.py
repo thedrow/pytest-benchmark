@@ -11,7 +11,7 @@ from .utils import funcname
 
 class Stats(object):
     fields = (
-        "min", "max", "mean", "stddev", "rounds", "median", "iqr", "q1", "q3", "iqr_outliers", "stddev_outliers",
+        "min", "max", "mean", "mode", "stddev", "rounds", "median", "iqr", "q1", "q3", "iqr_outliers", "stddev_outliers",
         "outliers", "ld15iqr", "hd15iqr"
     )
 
@@ -52,6 +52,13 @@ class Stats(object):
     @cached_property
     def mean(self):
         return statistics.mean(self.data)
+
+    @cached_property
+    def mode(self):
+        try:
+            return statistics.mode(self.data)
+        except statistics.StatisticsError:
+            return None
 
     @cached_property
     def stddev(self):

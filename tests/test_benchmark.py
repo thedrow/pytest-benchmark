@@ -6,6 +6,7 @@ import pytest
 pytest_plugins = 'pytester',
 platform
 
+HEADER = "Name (time in ?s) * Min * Max * Mean * Mode * StdDev * Rounds * Iterations"
 
 def test_help(testdir):
     result = testdir.runpytest('--help')
@@ -446,7 +447,7 @@ def test_max_time_min_rounds(testdir):
         "*collected 3 items",
         "test_max_time_min_rounds.py ...",
         "* benchmark: 2 tests *",
-        "Name (time in ?s) * Min * Max * Mean * StdDev * Rounds * Iterations",
+        HEADER,
         "------*",
         "test_fast          * 1  *",
         "test_slow          * 1  *",
@@ -462,7 +463,7 @@ def test_max_time(testdir):
         "*collected 3 items",
         "test_max_time.py ...",
         "* benchmark: 2 tests *",
-        "Name (time in ?s) * Min * Max * Mean * StdDev * Rounds * Iterations",
+        HEADER,
         "------*",
         "test_fast          * 5  *",
         "test_slow          * 5  *",
@@ -684,7 +685,7 @@ def test_disable_gc(testdir):
         "*collected 2 items",
         "test_disable_gc.py ..",
         "* benchmark: 2 tests *",
-        "Name (time in ?s) * Min * Max * Mean * StdDev * Rounds * Iterations",
+        HEADER,
         "------*",
         "test_fast          *",
         "test_slow          *",
@@ -700,7 +701,7 @@ def test_custom_timer(testdir):
         "*collected 2 items",
         "test_custom_timer.py ..",
         "* benchmark: 2 tests *",
-        "Name (time in ?s) * Min * Max * Mean * StdDev * Rounds * Iterations",
+        HEADER,
         "------*",
         "test_fast          *",
         "test_slow          *",
@@ -726,7 +727,7 @@ def test_sort_by_mean(testdir):
         "*collected 2 items",
         "test_sort_by_mean.py ..",
         "* benchmark: 2 tests *",
-        "Name (time in ?s) * Min * Max * Mean * StdDev * Rounds * Iterations",
+        HEADER,
         "------*",
         "test_fast          *",
         "test_slow          *",
@@ -874,7 +875,7 @@ def test_ok(benchmark, bad_fixture):
 
         "test_abort_broken.py:18: AssertionError",
         "* benchmark: 1 tests *",
-        "Name (time in ?s) * Min * Max * Mean * StdDev * Rounds * Iterations",
+        HEADER,
         "------*",
         "test_bad2           *",
         "------*",
@@ -927,7 +928,7 @@ def test_basic(testdir):
         "test_basic.py::test_fast PASSED",
         "",
         "* benchmark: 4 tests *",
-        "Name (time in ?s) * Min * Max * Mean * StdDev * Rounds * Iterations",
+        HEADER,
         "------*",
         "test_*         *",
         "test_*         *",
@@ -974,7 +975,7 @@ def test_mark_selection(testdir):
         "*collected 5 items",
         "test_mark_selection.py::test_xfast PASSED",
         "* benchmark: 1 tests *",
-        "Name (time in ?s) * Min * Max * Mean * StdDev * Rounds * Iterations",
+        HEADER,
         "------*",
         "test_xfast       *",
         "------*",
@@ -994,7 +995,7 @@ def test_only_benchmarks(testdir):
         "test_only_benchmarks.py::test_xfast PASSED",
         "test_only_benchmarks.py::test_fast PASSED",
         "* benchmark: 4 tests *",
-        "Name (time in ?s) * Min * Max * Mean * StdDev * Rounds * Iterations",
+        HEADER,
         "------*",
         "test_*         *",
         "test_*         *",
