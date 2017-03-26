@@ -163,6 +163,9 @@ def pytest_addoption(parser):
         action="store_true", default=False,
         help="Disable GC during benchmarks."
     )
+    group.addoption("--benchmark-pypy-memory-pressure",
+    metavar="NUM", type=int, default=None,
+    help="The number of bytes to artificially add to PyPy's GC in order to trigger GC collections.")
     group.addoption(
         "--benchmark-skip",
         action="store_true", default=False,
@@ -412,7 +415,7 @@ def pytest_runtest_setup(item):
         for name in marker.kwargs:
             if name not in (
                     "max_time", "min_rounds", "min_time", "timer", "group", "disable_gc", "warmup",
-                    "warmup_iterations", "calibration_precision"):
+                    "warmup_iterations", "calibration_precision", "pypy_memory_pressure"):
                 raise ValueError("benchmark mark can't have %r keyword argument." % name)
 
 

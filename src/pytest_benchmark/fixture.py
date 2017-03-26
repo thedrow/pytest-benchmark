@@ -46,7 +46,7 @@ class BenchmarkFixture(object):
             return cls._precisions.setdefault(timer, compute_timer_precision(timer))
 
     def __init__(self, node, disable_gc, timer, min_rounds, min_time, max_time, warmup, warmup_iterations,
-                 calibration_precision, add_stats, logger, warner, disabled, use_cprofile, group=None):
+                 calibration_precision, add_stats, logger, warner, disabled, use_cprofile, pypy_memory_pressure=None, group=None):
         self.name = node.name
         self.fullname = node._nodeid
         self.disabled = disabled
@@ -57,6 +57,7 @@ class BenchmarkFixture(object):
             self.param = None
             self.params = None
         self.group = group
+        self.pypy_memory_pressure = pypy_memory_pressure
         self.has_error = False
         self.extra_info = {}
 
@@ -101,9 +102,9 @@ class BenchmarkFixture(object):
             finally:
                 sys.settrace(tracer)
                 if gc_enabled:
-                    if add_memory_pressure:
+                    if add_memory_pressure and self.pypy_memory_pressure:
                         # Trick PyPy's GC to collect as early as possible
-                        add_memory_pressure(32000000)
+                        add_memory_pressure(self.pypy_memory_pressure)
                     gc.enable()
 
         return runner
