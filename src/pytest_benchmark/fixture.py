@@ -15,6 +15,13 @@ from .timers import compute_timer_precision
 from .utils import format_time
 
 try:
+    from __pypy__ import add_memory_pressure
+except ImportError:
+    add_memory_pressure = None
+
+
+
+try:
     import statistics
 except (ImportError, SyntaxError):
     statistics_error = traceback.format_exc()
@@ -94,6 +101,9 @@ class BenchmarkFixture(object):
             finally:
                 sys.settrace(tracer)
                 if gc_enabled:
+                    if add_memory_pressure:
+                        # Trick PyPy's GC to collect as early as possible
+                        add_memory_pressure(32000000)
                     gc.enable()
 
         return runner
